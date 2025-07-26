@@ -3,6 +3,12 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .container {
@@ -14,9 +20,77 @@
 .App h1 {
   color: #646cff;
   margin-bottom: 1rem;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #646cff40;
+  }
+  to {
+    text-shadow: 0 0 20px #646cff60, 0 0 30px #646cff40;
+  }
 }
 
 .App p {
   margin-bottom: 2rem;
   color: #888;
+  animation: slideInUp 0.8s ease-out 0.3s;
+  animation-fill-mode: both;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+  
+  .container {
+    padding: 1rem;
+    max-width: 100%;
+  }
+  
+  .App h1 {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+  
+  .App p {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+    padding: 0 0.5rem;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  #root {
+    padding: 0.5rem;
+  }
+  
+  .container {
+    padding: 0.5rem;
+  }
+  
+  .App h1 {
+    font-size: 1.75rem;
+  }
+  
+  .App p {
+    font-size: 0.9rem;
+    padding: 0;
+  }
 }

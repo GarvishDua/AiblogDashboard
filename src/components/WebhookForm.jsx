@@ -6,6 +6,7 @@ const WebhookForm = () => {
   const WEBHOOK_URL = 'http://localhost:5678/webhook-test/58473550-ed5a-4140-87a7-a28767175bf5'
   
   const [formData, setFormData] = useState({
+    category: '',
     keywords: '',
     promptText: ''
   })
@@ -28,6 +29,7 @@ const WebhookForm = () => {
 
     try {
       const testPayload = {
+        category: "anime",
         keywords: "test",
         promptText: "This is a test message",
         timestamp: new Date().toISOString(),
@@ -75,7 +77,7 @@ const WebhookForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     
-    if (!formData.keywords.trim() || !formData.promptText.trim()) {
+    if (!formData.category.trim() || !formData.keywords.trim() || !formData.promptText.trim()) {
       setError('Please fill in all fields')
       return
     }
@@ -87,6 +89,7 @@ const WebhookForm = () => {
     try {
       // Prepare the JSON payload
       const payload = {
+        category: formData.category,
         keywords: formData.keywords,
         promptText: formData.promptText,
         timestamp: new Date().toISOString(),
@@ -116,6 +119,7 @@ const WebhookForm = () => {
       
       // Clear form after successful submission
       setFormData({
+        category: '',
         keywords: '',
         promptText: ''
       })
@@ -141,6 +145,23 @@ const WebhookForm = () => {
   return (
     <div className="webhook-form">
       <form onSubmit={handleSubmit} className="form">
+        <div className="form-group">
+          <label htmlFor="category">Category:</label>
+          <select
+            id="category"
+            name="category"
+            value={formData.category}
+            onChange={handleInputChange}
+            className="form-select"
+            required
+          >
+            <option value="">Select a category</option>
+            <option value="anime">Anime</option>
+            <option value="marvel">Marvel</option>
+            <option value="manga">Manga</option>
+          </select>
+        </div>
+
         <div className="form-group">
           <label htmlFor="keywords">Keywords:</label>
           <input
