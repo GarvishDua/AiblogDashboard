@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import './WebhookForm.css'
 
 const WebhookForm = () => {
-  // Hardcoded webhook URL - not visible to users
-  const WEBHOOK_URL = 'http://localhost:5678/webhook-test/58473550-ed5a-4140-87a7-a28767175bf5'
+  // Use environment variable for webhook URL, fallback to localhost for development
+  const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || 'http://localhost:5678/webhook-test/58473550-ed5a-4140-87a7-a28767175bf5'
   
   const [formData, setFormData] = useState({
     category: '',
@@ -61,9 +61,13 @@ const WebhookForm = () => {
       console.error('Test Webhook Error:', err)
       
       if (err.name === 'TypeError' && err.message.includes('fetch')) {
-        setError(`Network error: Cannot connect to webhook. Make sure the webhook service is running on localhost:5678`)
+        if (WEBHOOK_URL.includes('localhost')) {
+          setError(`Development mode: Cannot connect to localhost webhook from deployed app. Please configure VITE_WEBHOOK_URL environment variable for production.`)
+        } else {
+          setError(`Network error: Cannot connect to webhook. Please check the webhook URL and ensure it's accessible.`)
+        }
       } else if (err.message.includes('404')) {
-        setError(`Webhook not found (404): The webhook endpoint is not registered or active. Please activate the webhook in n8n first by clicking 'Execute workflow' on the canvas.`)
+        setError(`Webhook not found (404): The webhook endpoint is not registered or active. Please activate the webhook first.`)
       } else if (err.message.includes('CORS')) {
         setError(`CORS error: The webhook is blocking requests from the browser.`)
       } else {
@@ -129,9 +133,13 @@ const WebhookForm = () => {
       
       // Check if it's a network error
       if (err.name === 'TypeError' && err.message.includes('fetch')) {
-        setError(`Network error: Cannot connect to webhook. Make sure the webhook service is running on localhost:5678`)
+        if (WEBHOOK_URL.includes('localhost')) {
+          setError(`Development mode: Cannot connect to localhost webhook from deployed app. Please configure VITE_WEBHOOK_URL environment variable for production.`)
+        } else {
+          setError(`Network error: Cannot connect to webhook. Please check the webhook URL and ensure it's accessible.`)
+        }
       } else if (err.message.includes('404')) {
-        setError(`Webhook not found (404): The webhook endpoint is not registered or active. Please activate the webhook in n8n first.`)
+        setError(`Webhook not found (404): The webhook endpoint is not registered or active. Please activate the webhook first.`)
       } else if (err.message.includes('CORS')) {
         setError(`CORS error: The webhook is blocking requests from the browser. Try enabling CORS on the webhook.`)
       } else {

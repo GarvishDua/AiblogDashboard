@@ -1,55 +1,124 @@
-# Blogging Dashboard
+# BloggingDashboard - AI Blog Generator Form
 
-A React application that provides a form interface for sending keywords and prompt text to webhooks in JSON format.
+A modern, responsive React form that collects blog generation parameters and sends them to a webhook for AI processing.
 
 ## Features
 
-- **Keywords Input**: Enter multiple keywords separated by commas
-- **Prompt Text**: Large textarea for entering prompt content
-- **Webhook Integration**: Send form data as JSON to any webhook URL
-- **Real-time Feedback**: Display success/error messages and webhook responses
-- **Responsive Design**: Works on desktop and mobile devices
-- **Dark/Light Theme**: Supports both color schemes
+- ✨ Modern UI with smooth animations
+- 📱 Fully responsive mobile design
+- 🎨 Dark theme with glassmorphism effects
+- 🔄 Real-time form validation
+- 🌟 Interactive loading states
+- 📊 Category-based blog generation (Anime, Marvel, Manga)
+- 🔗 Environment-based webhook configuration
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (version 16 or higher)
-- npm or yarn
+- Node.js (version 18 or higher)
+- npm or yarn package manager
 
 ### Installation
 
-1. Install dependencies:
+1. Clone the repository:
+```bash
+git clone https://github.com/GarvishDua/AiblogDashboard.git
+cd AiblogDashboard
+```
+
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-2. Start the development server:
+3. Configure environment variables:
+```bash
+# Copy the example environment file
+cp .env.example .env.local
+
+# Edit .env.local and set your webhook URL
+VITE_WEBHOOK_URL=your_webhook_url_here
+```
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory with:
+
+```
+VITE_WEBHOOK_URL=http://localhost:5678/webhook-test/58473550-ed5a-4140-87a7-a28767175bf5
+```
+
+**Important**: 
+- For local development, use your localhost webhook URL
+- For production deployment (Vercel/Netlify), configure the production webhook URL in your deployment platform's environment variables
+
+### Development
+
+Start the development server:
 ```bash
 npm run dev
 ```
 
-3. Open your browser and navigate to `http://localhost:5173`
+The application will be available at `http://localhost:5173`
 
-## Usage
+### Production Deployment
 
-1. Enter your webhook URL in the first field
-2. Add keywords separated by commas (e.g., "react, javascript, web development")
-3. Write your prompt text in the textarea
-4. Click "Send to Webhook" to submit the data
+#### Vercel Deployment
 
-### JSON Payload Format
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Configure environment variables in Vercel dashboard:
+   - Go to your project settings → Environment Variables
+   - Add `VITE_WEBHOOK_URL` with your production webhook URL
+4. Deploy
 
-The application sends data in the following JSON format:
+#### Manual Build
+
+```bash
+npm run build
+npm run preview
+```
+
+## Form Fields
+
+- **Category**: Select from Anime, Marvel, or Manga
+- **Keywords**: Comma-separated keywords for content generation (sent as string)
+- **Prompt Text**: Detailed description or prompt for the AI
+
+## Technical Stack
+
+- **Frontend**: React 18 with Vite
+- **Styling**: Custom CSS with animations
+- **Build Tool**: Vite 5.x
+- **Deployment**: Vercel ready
+
+## API Integration
+
+The form sends POST requests to the configured webhook URL with the following JSON structure:
 
 ```json
 {
-  "keywords": ["keyword1", "keyword2", "keyword3"],
-  "promptText": "Your prompt text here...",
-  "timestamp": "2025-01-20T10:30:00.000Z",
-  "source": "blogging-dashboard"
+  "category": "anime",
+  "keywords": "action, adventure, fantasy",
+  "promptText": "Create a blog post about epic anime battles"
 }
+```
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── WebhookForm.jsx     # Main form component with webhook integration
+│   └── WebhookForm.css     # Complete styling with animations and mobile responsiveness
+├── App.jsx                 # Root component
+├── App.css                 # App styling
+├── main.jsx               # Entry point
+└── index.css              # Global styles
+.env.example               # Environment variables template
+.env.local                 # Local environment variables (gitignored)
+vercel.json               # Vercel deployment configuration
 ```
 
 ## Available Scripts
@@ -59,25 +128,13 @@ The application sends data in the following JSON format:
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
 
-## Technology Stack
+## Troubleshooting
 
-- **React 18** - UI library
-- **Vite** - Build tool and development server
-- **CSS3** - Styling with modern features
-- **Fetch API** - HTTP requests
+### Webhook Connection Issues
 
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── WebhookForm.jsx     # Main form component
-│   └── WebhookForm.css     # Form styling
-├── App.jsx                 # Root component
-├── App.css                 # App styling
-├── main.jsx               # Entry point
-└── index.css              # Global styles
-```
+- **Localhost in Production**: If you see "Cannot connect to localhost webhook", make sure to set the `VITE_WEBHOOK_URL` environment variable in your deployment platform
+- **CORS Errors**: Enable CORS on your webhook endpoint
+- **Network Errors**: Verify your webhook URL is accessible and the service is running
 
 ## Contributing
 
