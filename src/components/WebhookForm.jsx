@@ -67,7 +67,7 @@ const WebhookForm = () => {
           setError(`Network error: Cannot connect to webhook. Please check the webhook URL and ensure it's accessible.`)
         }
       } else if (err.message.includes('404')) {
-        setError(`Webhook not found (404): The webhook endpoint is not registered or active. Please activate the webhook first.`)
+        setError(`Webhook not found (404): The n8n webhook is not active. Go to http://localhost:5678, open your workflow, and click "Execute workflow" to activate the test webhook.`)
       } else if (err.message.includes('CORS')) {
         setError(`CORS error: The webhook is blocking requests from the browser.`)
       } else {
@@ -139,7 +139,7 @@ const WebhookForm = () => {
           setError(`Network error: Cannot connect to webhook. Please check the webhook URL and ensure it's accessible.`)
         }
       } else if (err.message.includes('404')) {
-        setError(`Webhook not found (404): The webhook endpoint is not registered or active. Please activate the webhook first.`)
+        setError(`Webhook not found (404): The n8n webhook is not active. Go to http://localhost:5678, open your workflow, and click "Execute workflow" to activate the webhook.`)
       } else if (err.message.includes('CORS')) {
         setError(`CORS error: The webhook is blocking requests from the browser. Try enabling CORS on the webhook.`)
       } else {
